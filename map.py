@@ -9,8 +9,10 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 WIDTH = 1200
 HEIGHT = 750
-car_size_x = 60 # to help us determine crashes better
+car_size_x = 60  # to help us determine crashes better
 car_size_y = 30
+mouse_position = (0, 0)
+drawing = False
 screen = pygame.display.set_mode([WIDTH, HEIGHT])
 car_png = pygame.image.load('car_updated.png')
 
@@ -21,6 +23,33 @@ def car(x, y):
     new_image = image.resize((car_size_x, car_size_y))
     new_image.save('car_updated.png')
 
+
+def draw_map():
+    finished = False
+    size = (3, 3)
+    radius = 25
+    circle = pygame.Surface(size)
+    last_pos = None
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+            elif event.type == MOUSEMOTION:
+                if (finished):
+                    mouse_position = pygame.mouse.get_pos()
+                    if last_pos is not None:
+                        pygame.draw.line(screen, WHITE, last_pos, mouse_position, 3)
+                    last_pos = mouse_position
+            elif event.type == MOUSEBUTTONUP:
+                mouse_position = (0, 0)
+                last_pos = None
+                finished = False
+            elif event.type == MOUSEBUTTONDOWN:
+                finished = True
+        pygame.display.update()
 
 def setup():
     pygame.init()
@@ -36,13 +65,13 @@ def setup():
     y = 1
     left, right, up, down = False, False, False, False
 
+    draw_map()
     running = True
     while running is True and crashed is False:
-
-        # pos_x += 2
-        # pos_y += 2
-
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     pygame.quit()
@@ -75,8 +104,10 @@ def setup():
         if down:
             pos_y += 2
 
-        if pos_x >= WIDTH - car_size_x or pos_y >= HEIGHT - car_size_y:
-            crashed = True
+        if pos_x >= WIDTH - car_size_x or \
+                pos_y >= HEIGHT - car_size_y or \
+                pos_x < 1 or pos_y < 1:
+            pos_x = pos_y = 1  # crashed
 
         position = (pos_x, pos_y)
         # if user clicks on X
@@ -84,7 +115,7 @@ def setup():
         pygame.draw.rect(screen, WHITE, (200, 150, 100, 50))
         screen.fill(BLACK)
         screen.blit(car_png, position)
-        pygame.display.update() # updates the frames
+        pygame.display.update()  # updates the frames
         clock.tick(120)
 
     pygame.quit()
