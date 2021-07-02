@@ -1,0 +1,2 @@
+class Sensor(object):
+    pass
