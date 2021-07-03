@@ -84,6 +84,7 @@ def setup():
     pygame.init()
     pygame.display.set_caption('Self Driving Car')
     screen.fill(BLACK)
+    orientation = 0
     clock = pygame.time.Clock()
     crashed = False
     global sand  # sand is an array that has as many cells as our graphic interface has pixels. Each cell has a one if there is sand, 0 otherwise.
@@ -172,9 +173,8 @@ def setup():
 
         position = (pos_x, pos_y)
         n = randint(1, 4)
-        #left right up down
+        # left right up down
         movement = []
-        print(n)
         if n == 1:
             movement = move('up', pos_x, pos_y)
         if n == 2:
@@ -212,18 +212,25 @@ def setup():
                                             sensor5_x, sensor6_x, sensor1_y, sensor2_y, sensor3_y, sensor4_y,
                                             sensor5_y, sensor6_y))[5]
 
-        orientation = [(current_location[0] - last_location[0])%360,
-                       (current_location[1] - last_location[1]) % 360]
 
-        last_signal = [signal_car_1, signal_car_2, signal_car_3, orientation, -orientation]
-        action = brain.update(last_reward,
-                              last_signal)  # playing the action from our ai (the object brain of the dqn class)
-        scores.append(brain.score())  # appending the score (mean of the last 100 rewards to the reward window)
-        rotation = action2rotation[
-            action]  # converting the action played (0, 1 or 2) into the rotation angle (0°, 20° or -20°)
-        
-        last_location = []
-        current_location =[]
+
+        ''' TRAINING '''
+
+        # current_location = [pos_x, pos_y]
+        # last_location = [pos_x, pos_y]
+        # orientation = [(current_location[0] - last_location[0])%360,
+        #                (current_location[1] - last_location[1]) % 360]
+        #
+        # # last_signal = [signal_car_1, signal_car_2, signal_car_3, orientation, -orientation]
+        # last_signal = []
+        # action = brain.update(last_reward,
+        #                       last_signal)  # playing the action from our ai (the object brain of the dqn class)
+        # scores.append(brain.score())  # appending the score (mean of the last 100 rewards to the reward window)
+        # rotation = action2rotation[
+        #     action]  # converting the action played (0, 1 or 2) into the rotation angle (0°, 20° or -20°)
+        #
+        # last_location = []
+        # current_location =[]
 
 
 
