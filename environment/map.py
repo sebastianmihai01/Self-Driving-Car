@@ -212,8 +212,6 @@ def setup():
                                             sensor5_x, sensor6_x, sensor1_y, sensor2_y, sensor3_y, sensor4_y,
                                             sensor5_y, sensor6_y))[5]
 
-
-
         ''' TRAINING '''
 
         # current_location = [pos_x, pos_y]
