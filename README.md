@@ -4,5 +4,5 @@
 
 Installation
 -
-(unpack the pip freeze environment)
-pip install -r requirements.txt
+1) (unpack the pip freeze environment) \
+   __pip install -r requirements.txt__
