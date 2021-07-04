@@ -17,9 +17,9 @@ def calculate_distance(screen, s1_x, s2_x, s3_x, s4_x, s5_x, s6_x, s1_y, s2_y, s
     ray1, ray2, ray3, ray4, ray5, ray6 = 0, 0, 0, 0, 0, 0  # distances from the sensor to the closest wall
 
     distance_list = []
-    dim1_x = s1_x, dim1_y = s1_y, dim2_x = s2_x, dim2_y = s2_y
-    dim3_x = s3_x, dim3_y = s3_y, dim4_x = s4_x, dim4_y = s4_y
-    dim5_x = s5_x, dim5_y = s5_y, dim6_x = s6_x, dim6_y = s6_y
+    dim1_x, dim1_y, dim2_x, dim2_y = s1_x, s1_y, s2_x, s2_y
+    dim3_x, dim3_y, dim4_x, dim4_y = s3_x, s3_y, s4_x, s4_y
+    dim5_x, dim5_y, dim6_x, dim6_y = s5_x, s5_y, s6_x, s6_y
 
     if 0 < dim1_x < 1150 and 0 < dim1_y < 700:
         while 1 < dim1_x < 1149 and 1 < dim1_y < 749:
