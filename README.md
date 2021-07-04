@@ -6,3 +6,17 @@ Installation
 -
 1) (unpack the pip freeze environment) \
    __pip install -r requirements.txt__
+2) Run _run.py_
+
+
+
+# Documentation
+
+## Algorithms used:
+- Artificial, Convolutional and Recurrent Neuronal Networks
+- Deep Q-Learning
+- Markov Action Selection Policy
+- Stochastic Gradient Descent for Weight Adjustments
+- Backpropagation (Loss comparison between current and last state)
+- RELU's, Softmax, Reward Mechanism
+(underlying game made in pygame)
