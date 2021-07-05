@@ -16,14 +16,34 @@ Installation
 
 
 ## Workflow
+
 Network) 
    - Make a nn.Module instance
    - input layer, hidden layer1+2, output layer, action
    - first_connection, second_connection (both linear, between consecutive layers)
-   - **forward()** = gets states, returs Q-val ( using RELU and second_connection(x) )
+     (these RELU functions activate the neurons)
+   - **forward()** = gets states, activate the neurons, returns Q-val ( using RELU and second_connection(x) )
+
+
  
 Experience Replay)
-   - 
+![image](https://user-images.githubusercontent.com/73531247/124481395-832de780-dda8-11eb-91d9-ccee8da508e6.png)
+    - get 100 random states out of 100k memory states
+    
+DQN)
+   - its objects are learning _models_
+   - **last_state** = input_layer + 1 dimension = TENSOR(input_layer).unsqueeze(0) <- add a fake dim
+   - the network is based on learning models which take the input (input_layer, action, gamma)
+   - _learn( batch_state, batch_next_state, batch_reward, batch_action )_ : 
+      >> Get the output of the input state (model.gather on dim 1 <- action dim)
+      >> Get the max Q-val of next_output with detach
+      >> calculate target, apply loss, optimizer, backpropagation, reinit. the optimizer
+   - _update_( reward, new_signal )
+      >> new_state given new_signal (with unsqueeze(0))
+      >> push it into memory
+      >> get action
+      >> update reward window and calculate the score
+
 
 ## Algorithms used:
 - Artificial, Convolutional and Recurrent Neuronal Networks
