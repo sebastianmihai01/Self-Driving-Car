@@ -20,3 +20,103 @@ Installation
 - Backpropagation (Loss comparison between current and last state)
 - RELU's, Softmax, Reward Mechanism
 (underlying game made in pygame)
+
+## Class 'dqn'
+
+# Variables
+- the **input of the NN** are the STATES encoded in the VECTOR of 5 dimensions (3 sign, orient, -orient)
+- **state** = VECTOR of 5-tuple (fake dim, last state, new state, last action, last reward)
+- **tensor** = an ARRAY with a **gradient** (which needs one more dimension - for the batch size)
+- we use _tensors_ because the Network only **takes batches, not arrays*
+- **last_state** = BATCH TENSOR with 1)input_layer & 2)a fake dimension
+        self.last_state = torch.Tensor(input_layer).unsqueeze(0)
+        (**unsqueeze**: returns a new tensor with a dimension added at position 'n') \
+        _>>> torch.unsqueeze(x, 0) \
+         tensor([[ 1,  2,  3,  4]]) \
+         >>> torch.unsqueeze(x, 1) \
+         tensor([[ 1], \
+               [ 2], \
+               [ 3], \
+               [4]])
+
+- **gamma** = discount factor
+- **model** = instance object of class Network(input_layer, action)
+- **memory** = instance object of class ReplayMemory(100000) <- 100k transitions = 100k states (5-tuples) 
+- **actions** = either 0/1/2 referring to 0, 20, -20 
+- **orientation** = either 0, 20, -20
+
+# select_action()
+- **Softmax** - we get an action (give a Q value outputted by our NN) \
+  one Q-value for each action (left, straight, right) \
+         SOFTMAX = choose the best action to play, while also experimenting the other possible actions \
+       SOFTMAX = distribution of probabilities for each the Q-values & Q-state action \
+       Softmax => assigns the biggest prob. to the highest Q-value \
+       
+- **1 state => 3 actions** => 3 Q-values: Q-state action1, Q-state action2, Q-state action3 \
+       With these 3 Q-values we will generate a distribution of probabilities \
+       One prob. for one q-value \
+       
+- **temp** gives the certainty quotient
+- **multinomial** gets 'n' random pytorch tensors
+
+
+## Training the Neuronal Network
+      ----------------------------------
+      TRAINING THE DEEP NEURONAL NETWORK
+      ----------------------------------
+     
+      Approach:
+      > forward propagation
+      > after, backpropagation
+      > get the OUTPUT and TARGET
+      > COMPARE the output to target and get the last error
+      > BACK-PROPAGATE the last error into the neuronal network
+      > use stochastic GRADIENT DESCENT to UPDATE the WEIGHTS according to how much they contributed to the last error
+     
+      > We take it into BATCHES because a transition is a
+       tuple of 5 elements: first fake dimension, current state, next state, current reward, current action
+   
+      > We use this because with simple consecutive transitions, the model would not learn anything
+      > with the current state vs. next state => we compute the LOSS
+      
+# learn()
+
+**outputs = self.model(batch_state).gather(1, batch_action.unsqueeze(1)).squeeze(1)**
+- we need the output of the input state
+- => we get the MODEL output of the input state (not the model, but the output)
+- after, we only extract theh action 
+- (batch_action) does NOT have a fake dimension, as batch_state does
+- unsqueeze(1) = dim of action, unsqueeze(0) = fake dimension of the state
+- **.gather(dim,index)
+- 2D array -> dim=0 is rows, dim=1 is columns
+- 3D array -> dim=0 is image, dim=1 is rows, dim=2 is columns
+- **index** -> index _tensor_ corresponding to the values in the value _tensor_
+- **unsqueeze** - mentioned above
+- **squeeze(n)** - returns a tensor with all dimension of input of size 'n' removed
+- squeeze(1) = we kill the batch as we want the result in an array (we do not work with batches anymore)
+
+--------------------------------------
+**next_outputs = self.model(batch_next_state).detach().max(1)[0]**
+- we calculate next_state because we need to compute the target
+- like in the max (with 'a' underneath)
+- next_output = maximum of values for next_state given all possible actions (the 'a' under max)
+- batch_next_state = all the states in all the transitions taken from a sample
+- we 'detach' it to take all the results, in order to apply the max function
+- the index (1) from max(1)[0] = index of action
+- the index [0] from max(1)[0] = index corresponding to the state (of next state)
+- result = we get the maximum of the Q-values of the next state represented by the index zero according
+to all the actions that are represented by the action with index 1
+
+**target = reward + gamma * (max Q-value of the next state, according to the action)**
+**td_loss = F.smooth_l1_loss(outputs, target)**
+- td = temporal difference
+- outputs = predictions
+- target = the target computed above
+
+**td_loss.backward(retain_graph=True) and self.optimizer.step() <- reinitialize the optimizer after every iteration**
+------------------------------
+## update(self, reward, new_signal)
+- unsqueeze(0) = add the FAKE dimension to the first position
+- new_state = torch.Tensor(new_signal).float().unsqueeze(0)
+**action = self.select_action(new_state)**
+
