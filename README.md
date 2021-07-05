@@ -12,6 +12,19 @@ Installation
 
 # Documentation
 
+![image](https://user-images.githubusercontent.com/73531247/124481054-2b8f7c00-dda8-11eb-9a74-bbe5c5e12251.png)
+
+
+## Workflow
+Network) 
+   - Make a nn.Module instance
+   - input layer, hidden layer1+2, output layer, action
+   - first_connection, second_connection (both linear, between consecutive layers)
+   - **forward()** = gets states, returs Q-val ( using RELU and second_connection(x) )
+ 
+Experience Replay)
+   - 
+
 ## Algorithms used:
 - Artificial, Convolutional and Recurrent Neuronal Networks
 - Deep Q-Learning
@@ -148,4 +161,21 @@ to all the actions that are represented by the action with index 1
              4) we do this to align the (for each row) state, action, reward for every time 't'
              5) 0 = first dimension
 
-             We return a list of batches, where every element is a PYTORCH VARIABLE        
+             We return a list of batches, where every element is a PYTORCH VARIABLE  
+             
+## Experience Replay
+
+- The agent learns only using long time correlations, not one time stamps. The states need to be independent from one another => we will implement MARKOV DP (as it uses independent states)
+
+'''
+ Steps:
+ 1) We create a memory of these 100 states (Transitions)
+ 2) We sample these states (we take random batches of these 100 transitions to make our next update)
+'''
+
+>>> It will grow until 10k events and it will remain at that value
+>>> => We delete the first element (rolling window)
+
+![image](https://user-images.githubusercontent.com/73531247/124480940-0f8bda80-dda8-11eb-841f-6231c87f10e8.png)
+![image](https://user-images.githubusercontent.com/73531247/124481017-22061400-dda8-11eb-92d2-06f04c4d7e1f.png)
+
