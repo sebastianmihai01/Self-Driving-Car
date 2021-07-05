@@ -109,10 +109,6 @@ to all the actions that are represented by the action with index 1
 
 **target = reward + gamma * (max Q-value of the next state, according to the action)**
 **td_loss = F.smooth_l1_loss(outputs, target)**
-- td = temporal difference
-- outputs = predictions
-- target = the target computed above
-
 **td_loss.backward(retain_graph=True) and self.optimizer.step() <- reinitialize the optimizer after every iteration**
 ------------------------------
 ## update(self, reward, new_signal)
@@ -120,3 +116,36 @@ to all the actions that are represented by the action with index 1
 - new_state = torch.Tensor(new_signal).float().unsqueeze(0)
 **action = self.select_action(new_state)**
 
+
+## Class Network
+
+- Inherits from torch.nn.Module
+- has a constructor __init__ to which we assign the values of the NN (such as number of neurons, layers, reward windows etc.)
+- 
+- td = temporal difference
+- outputs = predictions
+- target = the target computed above
+- self.first_conn = nn.Linear(self.input_layer, self.hidden_layer)  # input/hidden layer linear connection (connects all neurons between 2 layers)
+
+**forward()**
+- x = F.relu(self.first_conn(state))  # Module documentation
+- >> 'forward' function ACTIVATES the neurons in the neural network (signals)
+  >> we will use a RECTIFIER FUNCTION because we do not have linear values (rectify = breaking the linearity)'''
+- Q_val = self.second_conn(x)
+
+**sample()**
+    def sample(self, batch_size):
+        samples = zip(*random.sample(self.memory, batch_size))
+        return map(lambda x: Variable(torch.cat(x, 0)), samples)
+        
+             >>> map(function, object_to_apply_the_function_to)
+             
+             1) lambda functions will convert (all) our samples into a TORCH variable         
+             2) variable = convert from torch to a variable that will contain the tensor and the gradient
+             3) For each BATCH (that is contained in a sample)
+                => we concatenate (CAT) each batch with respect to the first dimension
+            
+             4) we do this to align the (for each row) state, action, reward for every time 't'
+             5) 0 = first dimension
+
+             We return a list of batches, where every element is a PYTORCH VARIABLE        
