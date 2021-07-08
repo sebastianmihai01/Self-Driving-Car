@@ -199,3 +199,6 @@ to all the actions that are represented by the action with index 1
 ![image](https://user-images.githubusercontent.com/73531247/124480940-0f8bda80-dda8-11eb-841f-6231c87f10e8.png)
 ![image](https://user-images.githubusercontent.com/73531247/124481017-22061400-dda8-11eb-92d2-06f04c4d7e1f.png)
 
+
+## Genomes and NEAT algorithm
+
