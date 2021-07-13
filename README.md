@@ -201,4 +201,4 @@ to all the actions that are represented by the action with index 1
 
 
 ## Genomes and NEAT algorithm
-
+- Bored right now, may do this later
