@@ -141,8 +141,8 @@ DQN)
 to all the actions that are represented by the action with index 1
 
 **target = reward + gamma * (max Q-value of the next state, according to the action)**
-**td_loss = F.smooth_l1_loss(outputs, target)**
-**td_loss.backward(retain_graph=True) and self.optimizer.step() <- reinitialize the optimizer after every iteration**
+td_loss = F.smooth_l1_loss(outputs, target)
+td_loss.backward(retain_graph=True) and self.optimizer.step() <- reinitialize the optimizer after every iteration
 ------------------------------
 ## update(self, reward, new_signal)
 - unsqueeze(0) = add the FAKE dimension to the first position
