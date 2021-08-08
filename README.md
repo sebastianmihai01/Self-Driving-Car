@@ -32,7 +32,7 @@ Experience Replay)
     
 DQN)
    - its objects are learning _models_
-   - **last_state** = input_layer + 1 dimension = TENSOR(input_layer).unsqueeze(0) <- add a fake dim
+   - **last_state** = input_layer + 1 dimension = TENSOR(input_layer).unsqueeze(0) <- add a fake dimension
    - the network is based on learning models which take the input (input_layer, action, gamma)
    - _learn( batch_state, batch_next_state, batch_reward, batch_action )_ : 
       >> Get the output of the input state (model.gather on dim 1 <- action dim)
