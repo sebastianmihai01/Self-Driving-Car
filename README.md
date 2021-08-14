@@ -124,7 +124,7 @@ DQN)
 - **.gather(dim,index)
 - 2D array -> dim=0 is rows, dim=1 is columns
 - 3D array -> dim=0 is image, dim=1 is rows, dim=2 is columns
-- **index** -> index _tensor_ corresponding to the values in the value _tensor_
+- **index** -> index _tensor_ corresponding to the values in the value tensor
 - **unsqueeze** - mentioned above
 - **squeeze(n)** - returns a tensor with all dimension of input of size 'n' removed
 - squeeze(1) = we kill the batch as we want the result in an array (we do not work with batches anymore)
