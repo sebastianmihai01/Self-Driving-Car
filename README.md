@@ -91,7 +91,7 @@ DQN)
        One prob. for one q-value \
        
 - **temp** gives the certainty quotient
-- **multinomial** gets 'n' random pytorch tensors
+- **multinomial** gets 'n' random tensors
 
 
 ## Training the Neuronal Network
