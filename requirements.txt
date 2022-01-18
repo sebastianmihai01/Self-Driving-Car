@@ -33,7 +33,7 @@ matplotlib==3.4.2
 mercurial==5.8
 neat==0.4.1
 nn==0.1.1
-numpy==1.19.5
+numpy==1.21.0
 oauthlib==3.1.1
 opt-einsum==3.3.0
 packaging==20.9
