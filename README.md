@@ -25,7 +25,6 @@ Network)
      (these RELU functions activate the neurons)
    - **forward()** = gets states, activate the neurons, returns Q-val ( using RELU and second_connection(x) )
 
-
  
 Experience Replay)
 ![image](https://user-images.githubusercontent.com/73531247/124481395-832de780-dda8-11eb-91d9-ccee8da508e6.png)
