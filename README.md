@@ -58,6 +58,7 @@ DQN)
 ## Class 'dqn'
 
 
+
 # Variables
 - the **input of the NN** are the STATES encoded in the VECTOR of 5 dimensions (3 sign, orient, -orient)
 - **state** = VECTOR of 5-tuple (fake dim, last state, new state, last action, last reward)
