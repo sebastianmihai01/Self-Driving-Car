@@ -93,7 +93,6 @@ DQN)
 - **temp** gives the certainty quotient
 - **multinomial** gets 'n' random tensors
 
-
 ## Training the Neuronal Network
       ----------------------------------
       TRAINING THE DEEP NEURONAL NETWORK
