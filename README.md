@@ -9,7 +9,6 @@ Installation
    __pip install -r requirements.txt__
 2) Run _run.py_
 
-
 # Documentation
 
 
