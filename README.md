@@ -195,5 +195,6 @@ td_loss.backward(retain_graph=True) and self.optimizer.step() <- reinitialize th
 ![image](https://user-images.githubusercontent.com/73531247/124481017-22061400-dda8-11eb-92d2-06f04c4d7e1f.png)
 
 
+
 ## Genomes and NEAT algorithm
 - Bored right now, may do this later
